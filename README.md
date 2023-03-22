@@ -1,4 +1,3 @@
-# Blog
 
 requirment:
 python 3.10,
