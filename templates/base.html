@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PyDJ Blog Home</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap1.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css'%}">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Py DJ Blog</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+            
+                    
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'post-create' %}">Create Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">logout</a>
+                </li>
+                <li>
+                    <label class="form-control">Welcome - {{ user.first_name }} {{ user.last_name }}</label>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+
+                {% endif %}
+            </ul>
+
+        </div>
+        <!-- Search Start -->
+                    <form style="font-size: 18px;" action="{% url 'search' %}" method="get">
+                        {% csrf_token %}
+                            <input name="q" type="text" placeholder="Search" />
+                            <button type="submit">Search</button>
+                    </form>
+        <!-- End Search -->
+    </nav>
+    
+    <br />
+    <br />
+    <div class="container">
+        <div class="row">
+            <!-- Main Work Area -->
+
+            <div class="col-sm-8">
+                {% if messages %}
+
+                {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">
+                    {{message}}
+                </div>
+                {% endfor %}
+
+                {% endif %}
+                {% block content%}
+
+                {% endblock %}
+            </div>
+            <!-- Right Nav Bar -->
+            
+            <div class="col-sm-4">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active">
+                        Latest Posts
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        Python Posts
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action disabled">
+                        Django Posts
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action disabled">
+                        HTML5 Posts
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action disabled">
+                        CSS Posts
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action disabled">
+                        Bootstrap Posts
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>Py Dj Blog CopyRight@2023</p>
+    </div>
+
+    <script type="text/javascript" src="{% static 'js/jquery-3.4.1.slim.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/popper.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js'%}"></script>
+
+</body>
+
+</html>
